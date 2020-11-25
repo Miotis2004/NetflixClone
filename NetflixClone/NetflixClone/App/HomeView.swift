@@ -19,9 +19,29 @@ struct HomeView: View {
             
             ScrollView(showsIndicators: false) {
                 LazyVStack {
+                    HStack {
+                        Button(action: {
+                            
+                        }) {
+                            Image("netflix_logo")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 50)
+                        }
+                        Spacer()
+                        Text("TV Shows")
+                        Spacer()
+                        Text("Movies")
+                        Spacer()
+                        Text("My List")
+                    }
+                    .padding(.leading, 10)
+                    .padding(.trailing, 30)
+                    
                     TopMoviePreview(movie: exampleMovie6)
                         .frame(width: screen.width)
-                        .cornerRadius(20)
+                        .padding(.top, -100)
+                        .zIndex(-1)
                     
                     ForEach(vm.allCategories, id: \.self) { category in
                         VStack {
