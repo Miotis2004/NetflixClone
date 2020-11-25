@@ -19,28 +19,11 @@ struct HomeView: View {
             
             ScrollView(showsIndicators: false) {
                 LazyVStack {
-                    HStack {
-                        Button(action: {
-                            
-                        }) {
-                            Image("netflix_logo")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 50)
-                        }
-                        Spacer()
-                        Text("TV Shows")
-                        Spacer()
-                        Text("Movies")
-                        Spacer()
-                        Text("My List")
-                    }
-                    .padding(.leading, 10)
-                    .padding(.trailing, 30)
+                    TopRowButtons()
                     
                     TopMoviePreview(movie: exampleMovie6)
                         .frame(width: screen.width)
-                        .padding(.top, -100)
+                        .padding(.top, -110)
                         .zIndex(-1)
                     
                     ForEach(vm.allCategories, id: \.self) { category in
@@ -73,5 +56,46 @@ struct HomeView: View {
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
         HomeView()
+    }
+}
+
+struct TopRowButtons: View {
+    var body: some View {
+        HStack {
+            Button(action: {
+                
+            }) {
+                Image("netflix_logo")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 50)
+            }
+            Spacer()
+            
+            Button(action: {
+                
+            }) {
+                Text("TV Shows")
+                    .scaledToFit()
+            }
+            Spacer()
+            
+            Button(action: {
+                
+            }) {
+                Text("Movies")
+                    .scaledToFit()
+            }
+            Spacer()
+            
+            Button(action: {
+                
+            }) {
+                Text("My List")
+                    .scaledToFit()
+            }
+        }
+        .padding(.leading, 10)
+        .padding(.trailing, 30)
     }
 }
