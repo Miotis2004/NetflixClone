@@ -44,9 +44,21 @@ struct MovieDetail: View {
                                 .bold()
                                 .font(.headline)
                         }
+                        
+                        WhiteButton(text: "Play", imageName: "play.fill", backgroundColor: .red ) {
+                            
+                        }
+                        
+                        CurrentEpisodeInformation(movie: movie)
+                        
+                        CastInfo(movie: movie)
+                        
+                        ButtonBar()
+                       
+//                        CustomTabSwitcher(tabs: <#T##[CustomTab]#>)
                     }//: VSTACK
+                    .padding()
                 }//: SCROLLVIEW
-                
                 Spacer()
             }//: VSTACK
         }//: ZSTACK
@@ -90,5 +102,65 @@ struct RatingView: View {
                 .bold()
         }
         .frame(width: 50, height: 20)
+    }
+}
+
+struct CastInfo: View {
+    var movie: Movie
+    
+    var body: some View {
+        VStack(spacing: 3) {
+            HStack {
+                Text("Cast: \(movie.cast)")
+                    .foregroundColor(.gray)
+                    .font(.caption)
+                Spacer()
+            }
+            HStack {
+                Text("Creators: \(movie.creators)")
+                    .foregroundColor(.gray)
+                    .font(.caption)
+                Spacer()
+            }
+        }
+        .padding(.vertical, 4)
+    }
+}
+
+struct CurrentEpisodeInformation: View {
+    var movie: Movie
+    
+    var body: some View {
+        Group {
+            HStack {
+                Text(movie.episodeInfoDisplay)
+                    .bold()
+                Spacer()
+            }
+            .padding(.vertical, 4)
+            
+            Text(movie.episodeDescriptionDisplay)
+                .font(.subheadline)
+        }
+    }
+}
+
+struct ButtonBar: View {
+    var body: some View {
+        HStack(spacing: 60) {
+            SmallVerticalButton(text: "My List", isOnImage: "checkmark", isOffImage: "plus", isOn: true) {
+                
+            }
+            
+            SmallVerticalButton(text: "Rate", isOnImage: "hand.thumbsup.fill", isOffImage: "hand.thumbsup", isOn: true) {
+                
+            }
+            
+            SmallVerticalButton(text: "Share", isOnImage: "paperplane", isOffImage: "paperplane", isOn: true) {
+                
+            }
+            
+            Spacer()
+        }
     }
 }
