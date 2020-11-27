@@ -21,57 +21,93 @@ struct MovieDetail: View {
             Color.black
                 .edgesIgnoringSafeArea(.all)
             
-            VStack {
-                HStack {
-                    Spacer()
-                    Button( action: {
-                        
-                    }, label: {
-                        Image(systemName: "clear")
-                            .font(.system(size: 35))
-                    })
-                    .buttonStyle(PlainButtonStyle())
-                }//: HSTACK
-                .padding(.horizontal, 22)
-                
-                ScrollView(.vertical, showsIndicators: false) {
-                    VStack {
-                        
-                        StandardHomeMovie(movie: movie)
-                            .frame(width: screen.width / 2.5)
-                        
-                        MovieInfoSubHeadline(movie: movie)
-                        
-                        if movie.promotionHeadline != nil {
-                            Text(movie.promotionHeadline!)
-                                .bold()
-                                .font(.headline)
-                        }
-                        
-                        WhiteButton(text: "Play", imageName: "play.fill", backgroundColor: .red ) {
+            ZStack {
+                VStack {
+                    HStack {
+                        Spacer()
+                        Button( action: {
                             
+                        }, label: {
+                            Image(systemName: "clear")
+                                .font(.system(size: 35))
+                        })
+                        .buttonStyle(PlainButtonStyle())
+                    }//: HSTACK
+                    .padding(.horizontal, 22)
+                    
+                    ScrollView(.vertical, showsIndicators: false) {
+                        VStack {
+                            
+                            StandardHomeMovie(movie: movie)
+                                .frame(width: screen.width / 2.5)
+                            
+                            MovieInfoSubHeadline(movie: movie)
+                            
+                            if movie.promotionHeadline != nil {
+                                Text(movie.promotionHeadline!)
+                                    .bold()
+                                    .font(.headline)
+                            }
+                            
+                            WhiteButton(text: "Play", imageName: "play.fill", backgroundColor: .red ) {
+                                
+                            }
+                            
+                            CurrentEpisodeInformation(movie: movie)
+                            
+                            CastInfo(movie: movie)
+                            
+                            ButtonBar()
+                           
+                            CustomTabSwitcher(tabs: [.episodes, .trailers, .more], movie: movie, showSeasonPicker: $showSeasonPicker, selectedSeason: $selectedSeason)
+                        }//: VSTACK
+                        .padding()
+                    }//: SCROLLVIEW
+                    Spacer()
+                }
+            }//: VSTACK
+            if showSeasonPicker {
+                Group {
+                    Color.black.opacity(0.9)
+                    
+                    VStack(spacing: 40) {
+                        Spacer()
+                        
+                        ForEach(0..<(movie.numberOfSeasons ?? 0)) { season in
+                            Button(action: {
+                                self.selectedSeason = season + 1
+                                self.showSeasonPicker = false
+                            }, label: {
+                                Text("Season \(season + 1)")
+                                    .foregroundColor(selectedSeason == season + 1 ? .white : .gray)
+                                    .bold()
+                                    .font(selectedSeason == season + 1 ? .title : .title2)
+                            })
                         }
                         
-                        CurrentEpisodeInformation(movie: movie)
+                       Spacer()
                         
-                        CastInfo(movie: movie)
-                        
-                        ButtonBar()
-                       
-//                        CustomTabSwitcher(tabs: <#T##[CustomTab]#>)
-                    }//: VSTACK
-                    .padding()
-                }//: SCROLLVIEW
-                Spacer()
-            }//: VSTACK
+                        Button(action: {
+                            showSeasonPicker = false
+                        }, label: {
+                            Image(systemName: "x.circle.fill")
+                                .font(.system(size: 40))
+                        })
+                        .padding(30)
+                    }
+                }
+                .edgesIgnoringSafeArea(.all)
+            }
         }//: ZSTACK
         .foregroundColor(.white)
+        
+        
     }
 }
 
 struct MovieDetail_Previews: PreviewProvider {
     static var previews: some View {
-        MovieDetail(movie: exampleMovie4)
+        MovieDetail(movie: exampleMovie1)
     }
 }
 
