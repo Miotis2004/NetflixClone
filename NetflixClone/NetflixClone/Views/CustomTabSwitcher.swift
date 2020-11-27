@@ -23,27 +23,28 @@ struct CustomTabSwitcher: View {
     }
     
     var body: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 20) {
-                ForEach(tabs, id: \.self) { tab in
-                    VStack {
-                        Rectangle()
-                            .frame(width: widthForTab(tab), height: 6)
-                            .foregroundColor(tab == currentTab ? Color.red : Color.clear)
-                        
-                        Button(action: {
-                            currentTab = tab
-                        }, label: {
-                            Text(tab.rawValue)
-                                .font(.system(size: 16, weight: .bold))
-                                .foregroundColor(tab == currentTab ? Color.white : Color.gray)
-                        })
-                        .buttonStyle(PlainButtonStyle())
-                        .frame(width: widthForTab(tab), height: 30)
+        VStack {
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 20) {
+                    ForEach(tabs, id: \.self) { tab in
+                        VStack {
+                            Rectangle()
+                                .frame(width: widthForTab(tab), height: 6)
+                                .foregroundColor(tab == currentTab ? Color.red : Color.clear)
+                            
+                            Button(action: {
+                                currentTab = tab
+                            }, label: {
+                                Text(tab.rawValue)
+                                    .font(.system(size: 16, weight: .bold))
+                                    .foregroundColor(tab == currentTab ? Color.white : Color.gray)
+                            })
+                            .buttonStyle(PlainButtonStyle())
+                            .frame(width: widthForTab(tab), height: 30)
+                        }
                     }
                 }
             }
-            
             switch currentTab {
                 case .episodes:
                     EpisodesView(episodes: movie.episodes ?? [], showSeasonPicker: $showSeasonPicker, selectedSeason: $selectedSeason)
@@ -53,7 +54,7 @@ struct CustomTabSwitcher: View {
                     MoreLikeThis(movies: movie.moreLikeThisMovies)
             }
         }
-    }
+     }
 }
 
 struct CustomTabSwitcher_Previews: PreviewProvider {

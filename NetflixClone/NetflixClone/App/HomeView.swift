@@ -12,6 +12,8 @@ struct HomeView: View {
     var vm = HomeVM()
     let screen = UIScreen.main.bounds
     
+    @State private var movieDetailToShow: Movie? = nil
+    
     var body: some View {
         ZStack {
             Color.black
@@ -41,6 +43,9 @@ struct HomeView: View {
                                         StandardHomeMovie(movie: movie)
                                             .frame(width: 100, height: 200)
                                             .padding(.horizontal, 20)
+                                            .onTapGesture(perform: {
+                                                movieDetailToShow = movie
+                                            })
                                     }//: LOOP
                                 }//: HSTACK
                             }//: SCROLLVIEW
@@ -48,6 +53,11 @@ struct HomeView: View {
                     }//: LOOP
                 }//: MAIN VSTACK
             }//: MAIN SCROLLVIEW
+            if movieDetailToShow != nil {
+                MovieDetail(movie: movieDetailToShow!, movieDetailToShow: $movieDetailToShow)
+                    .animation(.easeIn)
+                    .transition(.opacity)
+            }
         }//: ZSTACK
         .foregroundColor(.white)
     }

@@ -52,8 +52,10 @@ struct EpisodesView: View {
                     }
                     Text(episode.description)
                         .font(.system(size: 13))
+                        .multilineTextAlignment(.leading)
                         .lineLimit(3)
                 }
+                .padding(.vertical)
             }
             
             Spacer()
